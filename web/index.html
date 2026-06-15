@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LarI.A v0.4 (Beta)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>LarI.A</h1>
+                <p class="sidebar-subtitle">v0.4 (Beta)</p>
+            </div>
+            
+            <button id="shutdownBtn" class="shutdown-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0M12 2v10"/>
+                </svg>
+                Apagar
+            </button>
+        </aside>
+
+        <main class="main-content">
+            <div class="chat-container" id="chatContainer"></div>
+
+            <div class="input-container">
+                <div class="options-bar">
+                    <select id="documentType" class="select-input">
+                        <option value="">Tipo de documento</option>
+                        <option value="word">Word</option>
+                        <option value="powerpoint">PowerPoint</option>
+                    </select>
+
+                    <select id="templateSelect" class="select-input">
+                        <option value="">Plantilla</option>
+                    </select>
+                </div>
+
+                <div class="input-bar">
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Escribe tu mensaje..."
+                        rows="1"
+                    ></textarea>
+                    <button id="sendBtn" class="send-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
