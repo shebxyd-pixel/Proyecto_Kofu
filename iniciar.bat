@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 echo ========================================
-echo    LarI.A v0.4 (Beta) - Plataforma de IA para Office
+echo    Kofu v0.7 (Beta) - Plataforma de IA para Office
 echo ========================================
 echo.
 echo Directorio actual: %~dp0

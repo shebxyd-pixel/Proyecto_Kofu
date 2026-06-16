@@ -18,22 +18,23 @@ body {
 }
 
 .sidebar {
-    width: 260px;
+    width: 280px;
     background: #000000;
     border-right: 1px solid #262626;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    padding: 20px;
 }
 
 .sidebar-header {
-    padding: 20px 24px;
-    border-bottom: 1px solid #262626;
     text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #262626;
 }
 
 .sidebar-header h1 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: -0.5px;
@@ -45,22 +46,101 @@ body {
     margin-top: 4px;
 }
 
+.mode-selector {
+    margin-bottom: 20px;
+}
+
+.mode-label {
+    font-size: 14px;
+    color: #a3a3a3;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.mode-toggle {
+    display: flex;
+    background: #171717;
+    border-radius: 8px;
+    border: 1px solid #262626;
+    overflow: hidden;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    color: #737373;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mode-btn.active {
+    background: #667eea;
+    color: #ffffff;
+}
+
+.mode-btn:hover:not(.active) {
+    background: #262626;
+}
+
+.api-config {
+    margin-bottom: 20px;
+    display: none;
+}
+
+.api-config label {
+    font-size: 14px;
+    color: #a3a3a3;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.api-input {
+    width: 100%;
+    background: #171717;
+    border: 1px solid #262626;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #e5e5e5;
+    font-size: 14px;
+    outline: none;
+}
+
+.api-input:focus {
+    border-color: #667eea;
+}
+
+.task-counter {
+    font-size: 14px;
+    color: #a3a3a3;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #171717;
+    border-radius: 8px;
+    border: 1px solid #262626;
+}
+
+.task-counter span {
+    color: #667eea;
+    font-weight: 600;
+}
+
 .shutdown-btn {
-    width: auto;
-    padding: 8px 16px;
+    width: 100%;
+    padding: 12px;
     background: #171717;
     border: 1px solid #262626;
     border-radius: 8px;
     color: #e5e5e5;
-    font-size: 13px;
+    font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     transition: all 0.2s ease;
-    margin: 20px;
-    align-self: center;
 }
 
 .shutdown-btn:hover {
@@ -73,8 +153,8 @@ body {
 }
 
 .shutdown-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
 }
 
 .main-content {
@@ -141,6 +221,15 @@ body {
     font-size: 15px;
     line-height: 1.6;
     color: #e5e5e5;
+    white-space: pre-wrap;
+}
+
+.error-message {
+    color: #ef4444;
+    background: #450a0a;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #7f1d1d;
 }
 
 .input-container {

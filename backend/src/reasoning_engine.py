@@ -113,25 +113,25 @@ class ReasoningEngine:
         lower_input = user_input.lower()
         
         if any(word in lower_input for word in ['pentesting', 'seguridad', 'hacker', 'prueba de penetración']):
-            return 'Sobre pentesting:\n• Definición: Evaluación de seguridad simulando ataques\n• Metodologías: OWASP, PTES, OSSTMM, NIST\n• Fases: Reconocimiento → Escaneo → Enumeración → Explotación → Post-explotación → Informes\n• Herramientas: Nmap, Metasploit, Wireshark, Burp Suite\n\n¿Quieres que cree un documento o presentación?';
+            return 'Sobre pentesting:\n• Definición: Evaluación de seguridad simulando ataques\n• Metodologías: OWASP, PTES, OSSTMM, NIST\n• Fases: Reconocimiento → Escaneo → Enumeración → Explotación → Post-explotación → Informes\n• Herramientas: Nmap, Metasploit, Wireshark, Burp Suite\n\n¿Quieres que cree un documento o presentación?'
         
         if any(word in lower_input for word in ['powerpoint', 'presentación', 'pptx', 'ppt']):
-            return 'Para presentaciones puedo:\n• Usar temas: professional (azul), modern (verde), vibrant (naranja)\n• Aplicar colores coordinados\n• Formatear títulos y texto automáticamente\n• Incluir contenido desde investigación web\n\n¿Sobre qué tema te gustaría?';
+            return 'Para presentaciones puedo:\n• Usar temas: professional (azul), modern (verde), vibrant (naranja)\n• Aplicar colores coordinados\n• Formatear títulos y texto automáticamente\n• Incluir contenido desde investigación web\n\n¿Sobre qué tema te gustaría?'
         
         if any(word in lower_input for word in ['word', 'documento', 'docx', 'doc']):
-            return 'Para documentos puedo:\n• Usar estilos: professional o modern\n• Crear títulos, párrafos y tablas\n• Aplicar formatos avanzados\n• Incluir contenido desde investigación web\n\n¿Sobre qué tema te gustaría?';
+            return 'Para documentos puedo:\n• Usar estilos: professional o modern\n• Crear títulos, párrafos y tablas\n• Aplicar formatos avanzados\n• Incluir contenido desde investigación web\n\n¿Sobre qué tema te gustaría?'
         
         if any(word in lower_input for word in ['investiga', 'busca', 'qué es', 'explica']):
             topic = self._extract_topic(user_input)
             if topic:
-                return f'¡Claro! Investigaré sobre "{topic}" y te comparto un resumen. Usa el servidor Python para ver la investigación completa.';
+                return f'¡Claro! Investigaré sobre "{topic}" y te comparto un resumen. Usa el servidor Python para ver la investigación completa.'
         
         return 'Puedo ayudarte con:\n• Información sobre pentesting\n• Crear documentos de Word\n• Crear presentaciones de PowerPoint\n• Investigar temas en internet\n• Consejos de Office\n\n¿Qué te gustaría hacer?'
 
     def _generate_response(self, rule: KnowledgeRule, topic: str) -> str:
         responses = {
             "crear_documento_pentesting": f"Perfecto, para crear un documento sobre pentesting:\n1. Investigaré el tema para obtener información actualizada\n2. Organizaré el contenido con secciones claras\n3. Aplicaré estilos profesionales\n4. Incluiré tablas y referencias\n\n¿Listo para generar el documento?",
-            "crear_presentacion_pentesting": f"¡Genial! Para la presentación sobre pentesting:\n1. Usaré un tema atractivo (modern/professional/vibrant\n2. Incluiré slides de introducción, contenido y conclusiones\n3. Aplicaré colores coordinados\n4. Formatearé títulos y texto automáticamente\n\n¿Qué tema prefieres?",
+            "crear_presentacion_pentesting": f"¡Genial! Para la presentación sobre pentesting:\n1. Usaré un tema atractivo (modern/professional/vibrant)\n2. Incluiré slides de introducción, contenido y conclusiones\n3. Aplicaré colores coordinados\n4. Formatearé títulos y texto automáticamente\n\n¿Qué tema prefieres?",
             "investigar_tema": f"Excelente, investigaré sobre '{topic}'\n1. Buscaré fuentes confiables\n2. Extraeré información relevante\n3. Generaré un resumen estructurado\n4. Citaré las fuentes\n\nUn momento mientras busco información...",
             "dar_consejos_office": f"Claro, te daré consejos útiles:\n1. Revisaré mi base de conocimientos\n2. Filtraré tips relevantes\n3. Te los presentaré de forma organizada\n\n¿De qué herramienta necesitas consejos?",
             "explicar_pentesting": f"¡Perfecto! Aquí tienes una explicación estructurada sobre pentesting:\n1. Definición clara\n2. Metodologías principales\n3. Fases del proceso\n4. Herramientas esenciales\n5. Consideraciones éticas\n\nEmpecemos..."

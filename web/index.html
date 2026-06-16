@@ -3,17 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LarI.A v0.4 (Beta)</title>
+    <title>Kofu v0.7 (Beta)</title>
+    <link rel="icon" type="image/x-icon" href="../Uta icon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h1>LarI.A</h1>
-                <p class="sidebar-subtitle">v0.4 (Beta)</p>
+                <h1>Kofu</h1>
+                <p class="sidebar-subtitle">v0.7 (Beta)</p>
             </div>
-            
+
+            <div class="mode-selector">
+                <label class="mode-label">Modo de IA:</label>
+                <div class="mode-toggle">
+                    <button id="localModeBtn" class="mode-btn active" data-mode="local">Local</button>
+                    <button id="onlineModeBtn" class="mode-btn" data-mode="online">Online</button>
+                </div>
+            </div>
+
+            <div class="api-config" id="apiConfig">
+                <label for="apiKeyInput">API Key (Online):</label>
+                <input type="text" id="apiKeyInput" class="api-input" placeholder="Ingresa tu API key...">
+            </div>
+
+            <div class="task-counter" id="taskCounter">
+                Tareas activas: <span id="activeTasks">0</span>
+            </div>
+
             <button id="shutdownBtn" class="shutdown-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M18.36 6.64a9 9 0 1 1-12.73 0M12 2v10"/>

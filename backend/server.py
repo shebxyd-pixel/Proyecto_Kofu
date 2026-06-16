@@ -216,7 +216,7 @@ def create_powerpoint():
         output_path = os.path.join(BASE_DIR, 'output', filename)
         
         slides_data = [
-            {"title": topic, "layout": 0, "subtitle": "Generado por LarIA", "background": True},
+            {"title": topic, "layout": 0, "subtitle": "Generado por Kofu", "background": True},
             {"title": "Contenido", "layout": 1, "text": f"Presentacion sobre {topic} creada automaticamente.", "background": True}
         ]
         
@@ -256,7 +256,7 @@ def create_document():
         
         content_data = [
             {"type": "heading", "text": topic, "level": 1},
-            {"type": "paragraph", "text": f"Documento sobre {topic} generado automaticamente por LarIA."}
+            {"type": "paragraph", "text": f"Documento sobre {topic} generado automaticamente por Kofu."}
         ]
         
         result = office_agent.create_word_document(
@@ -295,7 +295,7 @@ def office_tips():
 
 if __name__ == '__main__':
     print("========================================")
-    print("   LarI.A v0.4 (Beta) - Servidor de IA")
+    print("   Kofu v0.7 (Beta) - Servidor de IA")
     print("========================================")
     print("Servidor iniciado en http://localhost:5000")
     print("Abre web/index.html en tu navegador para usar el chatbot")

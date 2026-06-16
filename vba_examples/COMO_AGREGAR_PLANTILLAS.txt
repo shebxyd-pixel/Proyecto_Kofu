@@ -1,0 +1,39 @@
+==================================================
+             CÓMO AGREGAR PLANTILLAS A KOFU
+==================================================
+
+1. TIPOS DE ARCHIVOS SOPORTADOS
+   --------------------------------
+   • PowerPoint: .pptx, .potx, .pptm
+   • Word: .docx, .dotx, .docm
+
+2. UBICACIÓN DE LAS PLANTILLAS
+   ------------------------------
+   Coloca tus plantillas en las carpetas correspondientes:
+   • Plantillas PowerPoint: templates/powerpoint/
+   • Plantillas Word: templates/word/
+
+3. PASOS PARA AGREGAR UNA PLANTILLA
+   -----------------------------------
+   a) Abre tu programa de Office (PowerPoint o Word)
+   b) Crea o abre el documento que quieres usar como plantilla
+   c) Guarda el archivo con el formato adecuado:
+      - PowerPoint: Guardar como → Tipo: Plantilla PowerPoint (*.potx)
+      - Word: Guardar como → Tipo: Plantilla Word (*.dotx)
+   d) Copia el archivo guardado a la carpeta correspondiente
+   e) Reinicia el servidor (si estaba corriendo) para que detecte la nueva plantilla
+
+4. NOMBRES RECOMENDADOS
+   -----------------------
+   Usa nombres descriptivos para tus plantillas, por ejemplo:
+   • presentacion_profesional.potx
+   • informe_tecnico.dotx
+   • plantilla_reunion.pptx
+
+5. SOLUCIÓN DE PROBLEMAS
+   ------------------------
+   • Si la plantilla no aparece: Asegúrate de que está en la carpeta correcta y que el formato es válido
+   • Si hay errores al usarla: Asegúrate de que la plantilla no está dañada y de que Microsoft Office está instalado
+   • Plantillas muy grandes: Pueden causar lentitud, intenta reducir su tamaño
+
+==================================================
