@@ -1,0 +1,102 @@
+MIT License with AI Generation and Use Restrictions
+
+Copyright (c) 2026 Alex Minerva (shebxyd-pixel)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+=== STANDARD MIT CONDITIONS ===
+
+1. The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+2. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+=== ADDITIONAL AI GENERATION TERMS ===
+
+ARTIFICIAL INTELLIGENCE DEVELOPMENT NOTICE:
+This software and all code therein (version 0.1 - 0.9 Beta, and all versions 1.0+)
+have been created with significant assistance from Artificial Intelligence systems.
+The AI assistance is attributed to Alex Minerva (shebxyd-pixel) as the project owner
+and human curator of this work.
+
+ATTRIBUTION REQUIREMENT:
+If you use substantial portions of this codebase as a foundation for your own project,
+you MUST:
+- Credit Alex Minerva (shebxyd-pixel) in your project's LICENSE, README, or documentation
+- Include a link to the original repository: https://github.com/shebxyd-pixel/Proyecto_Kofu
+- Clearly state that your project is derived from or based upon Kofu v0.7+
+
+NAMING RESTRICTIONS:
+You are EXPRESSLY FORBIDDEN from:
+- Naming your project "Kofu" or any name containing "Kofu" 
+- Claiming authorship or ownership of the Kofu name or brand
+- Representing the work as your original creation (you must acknowledge the base)
+- Using "Alex Minerva" or "Shebxyd-pixel" as your author name for derived works
+
+PERMITTED USES:
+✓ Use for personal projects (with attribution)
+✓ Use for educational purposes (with attribution)
+✓ Use for commercial projects (with attribution, subject to restrictions above)
+✓ Modify and improve the code (with attribution to original)
+✓ Distribute modified versions (with original license preserved)
+✓ Create derivative projects with NEW, DISTINCT names
+
+FREE DISTRIBUTION:
+This project is provided freely and may be downloaded, installed, and used
+by any person for any lawful purpose, PROVIDED that:
+- You comply with all conditions listed above
+- You do not violate the naming and attribution requirements
+- You retain all copyright and license notices in your copies
+- You include this license in any substantial distribution of the code
+
+BETA VERSION DISCLAIMER:
+Versions 0.1 through 0.9 are BETA versions and may contain bugs, incomplete
+features, security vulnerabilities, or other issues. These beta versions are
+provided AS-IS without warranty. The author is not responsible for any issues,
+data loss, or problems resulting from use of beta versions.
+
+VERSION 1.0+ COMMITMENT:
+Starting from version 1.0, this software will be considered stable and will
+receive ongoing maintenance and support updates. All terms of this license
+apply equally to version 1.0 and all subsequent versions.
+
+COMPATIBILITY WITH THIRD-PARTY LICENSES:
+This project includes dependencies licensed under MIT, Apache 2.0, and other
+open-source licenses. All third-party license terms are preserved and must be
+respected. See ACKNOWLEDGMENTS.md and requirements.txt for details.
+
+=== TRADEMARK AND BRAND NOTICE ===
+
+"Kofu" is associated with the original project by Alex Minerva. While the code
+is freely available, the name and brand "Kofu" are not available for use by
+derivative projects. This protects the integrity and recognition of the original
+work and prevents confusion in the marketplace or community.
+
+=== TERMINATION ===
+
+If you violate the naming restrictions or attribution requirements, your license
+to use, modify, or distribute this software is automatically terminated without
+notice. The copyright holder retains the right to pursue legal action for
+unauthorized use of the "Kofu" name or brand.
+
+=== CONTACT ===
+
+For questions regarding this license, permissions, or derivative use:
+GitHub: https://github.com/shebxyd-pixel
+Project: Kofu v0.7 Beta (AI-Assisted Development)
+
+---
+
+Last Updated: June 20, 2026
+License Type: MIT + AI Generation + Custom Use Restrictions
