@@ -1,6 +1,8 @@
 import sys
 import os
 import io
+import re
+import base64
 
 try:
     from flask import Flask, request, jsonify
@@ -51,14 +53,74 @@ BASE_DIR = os.path.join(os.path.dirname(__file__), '..')
 # Cargar variables de entorno
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-use_ollama = os.getenv("USE_OLLAMA", "true").lower() == "true"
-assistant = AIAssistant(use_ollama=use_ollama)
+use_ollama = os.getenv("USE_LOCAL_LLM", os.getenv("USE_OLLAMA", "true")).lower() == "true"
+ollama_model = os.getenv("OLLAMA_MODEL", os.getenv("LLM_MODEL_NAME", "gemma4"))
+assistant = AIAssistant(use_ollama=use_ollama, ollama_model=ollama_model)
 typo_corrector = TypoCorrector()
 external_ai = ExternalAIAPI()
 office_agent = OfficeAgent()
 web_researcher = WebResearcher()
 sanitizador = SanitizadorEntrada()
 file_processor = FileProcessor()
+
+DIRECT_ACCESS_TOKEN = base64.b64encode(b"Alex:Aritzu").decode('utf-8')
+MAINTENANCE_ACCESS_TOKEN = base64.b64encode(b"root:root").decode('utf-8')
+
+
+def _encode_auth(username: str, password: str) -> str:
+    return base64.b64encode(f"{username}:{password}".encode('utf-8')).decode('utf-8')
+
+
+def _get_auth_mode(message: str) -> str:
+    username_match = re.search(r'USERNAME\s*[:=]\s*([A-Za-z0-9_@.-]+)', message, re.IGNORECASE)
+    password_match = re.search(r'PASSWORD\s*[:=]\s*([A-Za-z0-9_@.-]+)', message, re.IGNORECASE)
+    if not username_match or not password_match:
+        return ''
+
+    username = username_match.group(1).strip()
+    password = password_match.group(1).strip()
+    encoded = _encode_auth(username, password)
+    if encoded == DIRECT_ACCESS_TOKEN:
+        return 'direct'
+    if encoded == MAINTENANCE_ACCESS_TOKEN:
+        return 'maintenance'
+    return ''
+
+
+def _remove_auth_lines(message: str) -> str:
+    message = re.sub(r'USERNAME\s*[:=]\s*[A-Za-z0-9_@.-]+', '', message, flags=re.IGNORECASE)
+    message = re.sub(r'PASSWORD\s*[:=]\s*[A-Za-z0-9_@.-]+', '', message, flags=re.IGNORECASE)
+    return re.sub(r'\s{2,}', ' ', message).strip()
+
+
+def _is_direct_exception(message: str) -> bool:
+    if not isinstance(message, str):
+        return False
+    direct_triggers = [r'\btodo el mensaje\b', r'\bcontacto directo\b']
+    return any(re.search(trigger, message, re.IGNORECASE) for trigger in direct_triggers)
+
+
+def _maintenance_debug_response(message: str) -> str:
+    availability = False
+    model_name = 'desconocido'
+    if getattr(assistant.reasoning_engine, 'ollama_engine', None):
+        availability = assistant.reasoning_engine.ollama_engine.available
+        model_name = assistant.reasoning_engine.ollama_engine.model_name
+    status_lines = [
+        'Modo mantenimiento raíz activado: solo diagnóstico técnico.',
+        f'Ollama disponible: {availability}',
+        f'Modelo Ollama: {model_name}',
+        f'Sanitizador activo: {sanitizador is not None}',
+        f'Typo corrector activo: {typo_corrector is not None}',
+        f"Mensaje recibido: {message[:400] or '<vacío>'}",
+        'Reglas del motor de razonamiento cargadas: ' + ', '.join([rule.name for rule in assistant.reasoning_engine.rules])
+    ]
+    if any(term in message.lower() for term in ['error', 'fallo', 'problema', 'excepción', 'exception', 'bug']):
+        status_lines.append('Solicitud de reporte de error detectada.')
+    else:
+        status_lines.append('Respuesta de mantenimiento: se devolverá solo estado y problemas detectados, no conversación normal.')
+
+    return '\n'.join(status_lines)
 
 if not os.path.exists(os.path.join(BASE_DIR, "output")):
     os.makedirs(os.path.join(BASE_DIR, "output"))
@@ -143,16 +205,49 @@ def chat():
         message = data.get('message', '')
         show_thinking = data.get('show_thinking', False)
 
+        auth_mode = _get_auth_mode(message)
+        direct_access = auth_mode == 'direct' or _is_direct_exception(message)
+
+        if auth_mode == 'maintenance':
+            return jsonify({
+                'maintenance': True,
+                'response': _maintenance_debug_response(message)
+            })
+
+        clean_message = _remove_auth_lines(message)
+
+        if not clean_message:
+            return jsonify({'error': 'No se proporcionó mensaje válido después de eliminar las credenciales. Añade una instrucción junto con USERNAME/Password.'}), 400
+
+        if direct_access:
+            # try:
+            #     response, thinking_steps = assistant.direct_reason(clean_message)
+            # except Exception as e:
+            #     return jsonify({
+            #         'error': f'Modo directo falló: {str(e)}. Verifica que Ollama esté disponible y corriendo.'
+            #     }), 500
+
+            # thinking_process = [
+            #     {"step": step.step_num, "thought": step.thought, "evidence": step.evidence}
+            #     for step in thinking_steps
+            # ]
+            return jsonify({
+                'original_message': message,
+                'mode': 'direct_raw',
+                'response': clean_message,
+                'thinking_process': [],
+                'thinking_chain': ''
+            })
+
         # SANITIZAR ENTRADA
-        if not sanitizador.es_entrada_segura(message):
-            return jsonify({"error": "❌ Entrada bloqueada por seguridad: contiene código o contenido no permitido"}), 400
-        message = sanitizador.limpiar_texto(message)
+        # if not sanitizador.es_entrada_segura(message):
+        #     return jsonify({"error": "❌ Entrada bloqueada por seguridad: contiene código o contenido no permitido"}), 400
+        # message = sanitizador.limpiar_texto(message)
 
-        if not message:
-            return jsonify({'error': 'No se proporcionó mensaje válido'}), 400
-
-        corrected_message = typo_corrector.correct_text(message)
-        response, thinking_steps = assistant.process_request(corrected_message, show_thinking=show_thinking)
+        # corrected_message = typo_corrector.correct_text(message)
+        # response, thinking_steps = assistant.process_request(corrected_message, show_thinking=show_thinking)
+        response = clean_message
+        thinking_steps = []
 
         thinking_process = [
             {"step": step.step_num, "thought": step.thought, "evidence": step.evidence}

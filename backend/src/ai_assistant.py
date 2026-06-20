@@ -39,25 +39,38 @@ class KnowledgeBase:
 
 
 class AIAssistant:
-    def __init__(self, use_ollama: bool = True):
+    def __init__(self, use_ollama: bool = True, ollama_model: str = "gemma4"):
         self.web_researcher = WebResearcher()
         self.office_agent = OfficeAgent()
         self.knowledge_base = KnowledgeBase()
-        self.reasoning_engine = HybridReasoningEngine(use_ollama=use_ollama)
+        self.reasoning_engine = HybridReasoningEngine(use_ollama=use_ollama, model_name=ollama_model)
         self.chain_of_thought = ChainOfThought()
 
     def process_request(self, user_input: str, show_thinking: bool = False):
         self.chain_of_thought.steps = []
         self.chain_of_thought.add_step(f"Analizando solicitud: {user_input}")
         
-        response, thinking_steps = self.reasoning_engine.reason(user_input)
+        # response, thinking_steps = self.reasoning_engine.reason(user_input)
+        response = user_input
+        thinking_steps = []
         
-        if show_thinking:
-            thinking_process = "\n".join([str(step) for step in thinking_steps])
-            response += f"\n\n--- Proceso de razonamiento ---\n{thinking_process}"
+        # if show_thinking:
+        #     thinking_process = "\n".join([str(step) for step in thinking_steps])
+        #     response += f"\n\n--- Proceso de razonamiento ---\n{thinking_process}"
         
         self.chain_of_thought.add_step("Generando respuesta final")
         
+        return response, thinking_steps
+
+    def direct_reason(self, user_input: str):
+        self.chain_of_thought.steps = []
+        self.chain_of_thought.add_step(f"Acceso directo sin sanitización: {user_input}")
+
+        # response, thinking_steps = self.reasoning_engine.direct_reason(user_input)
+        response = user_input
+        thinking_steps = []
+
+        self.chain_of_thought.add_step("Respuesta directa generada")
         return response, thinking_steps
 
     def research_topic(self, topic):
