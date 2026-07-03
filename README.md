@@ -1,4 +1,4 @@
-# Kofu v0.7 (Beta)
+# Kofu v0.8 (Beta)
 
 ⚠️ **Estado**: En proceso de desarrollo (Beta v0.7) - Usa LLM de Ollama con Gemma 4 para razonamiento y sanitización. La IA en esta beta no es autónoma y puede fallar debido a errores de direcciones.
 
