@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:5000/api';
+const CHAT_API_URL = 'http://localhost:8000';
+const FILES_API_URL = 'http://localhost:5000';
 
 let allTemplates = {
     powerpoint: [],
@@ -117,7 +118,7 @@ function decrementTaskCounter() {
 
 async function loadTemplates() {
     try {
-        const response = await fetch(`${API_URL}/templates`);
+        const response = await fetch(`${FILES_API_URL}/templates`);
         const data = await response.json();
         allTemplates = data;
         updateTemplateDropdown();
@@ -334,10 +335,12 @@ async function createDocumentFromFile(file, docType, template) {
         formData.append('theme', 'professional');
     }
 
-    const response = await fetch(`${API_URL}${endpoint}`, {
-        method: 'POST',
-        body: formData
-    });
+const baseUrl = endpoint.includes('/chat') ? CHAT_API_URL : FILES_API_URL;
+
+const response = await fetch(`${baseUrl}${endpoint}`, {        
+    method: 'POST',        
+    body: formData
+});
 
     if (!response.ok) {
         const data = await response.json();
@@ -374,7 +377,7 @@ function extractTopic(message) {
 }
 
 async function chatWithAI(message) {
-    const response = await fetch(`${API_URL}/chat`, {
+    const response = await fetch(`${CHAT_API_URL}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message, show_thinking: false })
@@ -430,7 +433,7 @@ async function createDocument(topic, docType, template) {
     const endpoint = docType === 'word' ? '/create-document' : '/create-powerpoint';
     const filename = docType === 'word' ? 'documento_kofu.docx' : 'presentacion_kofu.pptx';
 
-    const response = await fetch(`${API_URL}${endpoint}`, {
+    const response = await fetch(`${CHAT_API_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

@@ -1,24 +1,39 @@
-from .ai_assistant import AIAssistant
-from .office_agent import OfficeAgent
-from .web_researcher import WebResearcher
-from .reasoning_engine import ReasoningEngine, ChainOfThought
-from .mcp_integration import MCPServer
-from .external_ai_api import ExternalAIAPI
-from .typo_corrector import TypoCorrector
-from .sanitizacion import SanitizadorEntrada
-from .ollama_engine import HybridReasoningEngine
-from .file_processor import FileProcessor
+"""
+Paquete backend de Kofu.
+Toda la lógica vive ahora en api.py (sanitización, corrección, razonamiento
+híbrido con Ollama, investigación web, generación de Office y digestión de
+archivos). Este __init__.py solo re-exporta lo necesario para quien quiera
+importar el asistente como librería en vez de usar la API HTTP.
+"""
+
+from .api import (
+    app,
+    AIAssistant,
+    HybridReasoningEngine,
+    ReasoningEngine,
+    ReasoningStep,
+    ChainOfThought,
+    OllamaEngine,
+    OfficeAgent,
+    WebResearcher,
+    FileProcessor,
+    SanitizadorEntrada,
+    TypoCorrector,
+    KnowledgeBase,
+)
 
 __all__ = [
+    "app",
     "AIAssistant",
+    "HybridReasoningEngine",
+    "ReasoningEngine",
+    "ReasoningStep",
+    "ChainOfThought",
+    "OllamaEngine",
     "OfficeAgent",
     "WebResearcher",
-    "ReasoningEngine",
-    "ChainOfThought",
-    "MCPServer",
-    "ExternalAIAPI",
-    "TypoCorrector",
+    "FileProcessor",
     "SanitizadorEntrada",
-    "HybridReasoningEngine",
-    "FileProcessor"
+    "TypoCorrector",
+    "KnowledgeBase",
 ]

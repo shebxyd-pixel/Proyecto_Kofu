@@ -1,2 +1,13 @@
 templates/word/Cobaem.dotx
 iniciar.sh
+.env(backup)
+CONTEXTO_KOFU.md
+INSTRUCCIONES_PROCESO.md
+.vscode
+backend/DEFOKO CATZ.ico
+.env.example
+backend/server.py
+.vscode/launch.json
+.vscode/settings.json
+backend/src/venv
+CONTEXTO_KOFU.md
