@@ -131,9 +131,6 @@ class TypoCorrector:
         return " ".join(self.correct_word(w) for w in palabras)
 
 
-# ======================================================================
-# 3. RAZONAMIENTO (reglas locales + Ollama como motor generativo)
-# ======================================================================
 class ReasoningStep:
     def __init__(self, step_num: int, thought: str, evidence: str = ""):
         self.step_num, self.thought, self.evidence = step_num, thought, evidence
@@ -268,7 +265,7 @@ class OllamaEngine:
 
     def razonar(self, prompt: str, system_prompt: Optional[str] = None) -> str:
         system_msg = system_prompt or (
-            "Eres Webtrest, un asistente de IA para pentesting, documentos y presentaciones. "
+            "Eres Kofu, un asistente de IA para crear documentos y presentaciones. "
             "Responde de forma clara y útil."
         )
         return self._generate(f"{system_msg}\n\nUSUARIO: {prompt}")
