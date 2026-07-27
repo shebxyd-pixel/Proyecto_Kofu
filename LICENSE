@@ -1,6 +1,6 @@
-MIT License with AI Generation and Use Restrictions
+MIT License
 
-Copyright (c) 2026 Alex Minerva (shebxyd-pixel)
+Copyright (c) Ollama
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -9,188 +9,13 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-=== STANDARD MIT CONDITIONS ===
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-1. The above copyright notice and this permission notice shall be included in all
-   copies or substantial portions of the Software.
-
-2. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-   SOFTWARE.
-
-=== TECHNOLOGY STACK AND DEPENDENCIES ===
-
-This project relies on established open-source and local AI tooling:
-
-- MarkItDown
-  - Origin: Microsoft repository for OCR and file conversion to Markdown.
-  - Usage in Proyecto_Kofu: Process multiple input formats including PDF, DOCX,
-    PPTX, images, and audio.
-  - Included in the project as an editable folder: `markitdown/`
-  - Link: https://github.com/microsoft/markitdown
-
-- Ollama with Gemma 4
-  - Usage: Offline reasoning, code sanitization, and local processing.
-  - Current Proyecto_Kofu version (0.7 Beta) uses this local LLM for reasoning
-    and sanitization.
-  - Link: https://ollama.ai/
-
-All third-party dependencies are subject to their own license terms and must be
-respected in addition to this license. This includes the license terms for
-Ollama and MarkItDown.
-
-=== ADDITIONAL AI GENERATION TERMS ===
-
-ARTIFICIAL INTELLIGENCE DEVELOPMENT NOTICE:
-This software and all code therein have been created with significant assistance
-from Artificial Intelligence systems. The AI assistance is attributed to Alex
-Minerva (shebxyd-pixel) as project owner and human curator of this work.
-
-CURRENT VERSION NOTICE:
-Current version (0.7 Beta) uses an LLM from Ollama with Gemma 4 for reasoning
-and sanitization.
-
-AI BEHAVIOR NOTICE:
-The AI in this beta version is not autonomous. It operates as a local reasoning
-assistant and may fail due to address resolution errors.
-
-ATTRIBUTION REQUIREMENT:
-If you use substantial portions of this codebase as a foundation for your own
-project, you MUST:
-- Credit Alex Minerva (shebxyd-pixel) in your project's LICENSE, README, or
-  documentation.
-- Include a link to the original repository: https://github.com/shebxyd-pixel/Proyecto_Kofu.
-- Clearly state that your project is derived from or based upon Kofu v0.7+.
-- For modified code, document the changes made and the scope of the modification.
-
-=== USE CASE SPECIFIC TERMS ===
-
-Personal Use:
-- ✅ Personal use is allowed.
-- ✅ Versions later than 1.2 may be used for personal use.
-- ✅ No attribution is required if the software is not republished.
-- ❌ If republished, attribution is required.
-
-Educational Use:
-- ✅ Allowed for versions earlier than 1.2.
-- ✅ Allowed for special educational versions based on 1.2+.
-- ❌ Normal versions beyond 1.2 are not permitted in educational contexts.
-- ✅ Educational distributions must include project name, logos, and attribution.
-
-Commercial Use:
-- ❌ Commercial use is prohibited unless one of the following conditions is met:
-  1. A license or compensation is paid to the project owner, OR
-  2. The code is restructured to have at most 20% similarity with the original
-     codebase (at least 80% new or refactored code).
-- ✅ For commercial use, only versions earlier than 1.2 may be used with at least
-  80% code modification, or version 1.0 may be used with minimal modifications
-  for functionality.
-- ❌ Using the program as-is for commercial purposes is not permitted.
-- ✅ In future commercial offerings based on 1.2+, limited commercial use may be
-  available under a specific license and agreement.
-
-=== CODE MODIFICATION AND DISTRIBUTION TERMS ===
-
-Code Modification:
-- ✅ Modifying the codebase is permitted.
-- ✅ You must acknowledge that the codebase originates from Proyecto_Kofu.
-- ✅ If more than 50% of the code is modified, or if files are added to improve
-  performance, greater freedom of editing, distribution, and commercialization
-  is granted.
-- ✅ Modified versions must document what was changed.
-
-Distribution of Modified Code:
-- ✅ Distribution of modified versions is permitted if:
-  * It clearly indicates that the work is derived from Proyecto_Kofu.
-  * The original license is preserved in the distributed package.
-  * The changes are documented.
-  * ❌ The derivative project is not named "Kofu" or any variation thereof.
-
-=== PERMITTED USES ===
-
-✓ Personal use is permitted, including versions later than 1.2.
-✓ Educational use is permitted for versions earlier than 1.2 or special educational
-  versions based on 1.2+.
-✓ Commercial use is permitted only under the restricted conditions described above.
-✓ Modifying the code with credit to the origin is permitted.
-✓ Distributing modified versions with the original license preserved is permitted.
-✓ Creating derivative projects with new and distinct names is permitted.
-
-=== VERSION ROADMAP AND FUTURE PLANS ===
-
-- v0.7 Beta
-  - Current development version.
-  - Uses Ollama with Gemma 4 for reasoning and sanitization.
-  - The AI is not autonomous in beta and may fail due to address resolution errors.
-  - Includes MarkItDown for OCR and file conversion.
-  - Available for personal use, educational use with attribution, and restricted
-    commercial use.
-
-- v1.0 Stable
-  - First stable version of the project.
-  - Autonomous behavior is intended in this release.
-  - Continuous maintenance and support.
-  - Educational use permitted with logos and attribution.
-  - Commercial use only with minimal modifications for functionality.
-
-- v1.2 Stable and Optimized
-  - Long-term stable version with performance optimizations.
-  - Focused on speed and efficiency.
-  - Commercial use limited under license.
-  - Special educational versions are available with school-focused controls.
-
-Version Use Policy:
-- Personal use may use versions later than 1.2.
-- Educational use may use versions earlier than 1.2 or special educational versions
-  based on 1.2+.
-- Normal versions beyond 1.2 are not permitted for general educational contexts.
-- Commercial use may use versions earlier than 1.2 with at least 80% code
-  modification, or version 1.0 with minimal code changes for functionality.
-- The program may not be used as-is for commercial use.
-
-=== NAMING RESTRICTIONS ===
-
-Derived Projects:
-- ✅ Create derived projects with new and distinct names.
-- ❌ Do not name a derivative project "Kofu" or any variation of "Kofu".
-- ❌ Do not claim authorship or ownership of the "Kofu" name or brand.
-- ❌ Do not present the work as wholly original without acknowledging the base.
-- ❌ Do not use "Alex Minerva" or "Shebxyd-pixel" as the author name for derivatives.
-
-=== THIRD-PARTY LICENSES ===
-
-This project uses third-party components under separate license terms.
-
-- Ollama: Users must comply with Ollama third-party license terms.
-- MarkItDown: Users must comply with MarkItDown third-party license terms.
-
-All third-party license requirements apply in addition to this license.
-
-=== BETA DISCLAIMER ===
-
-Beta versions may contain bugs, incomplete features, security vulnerabilities,
-or unstable behavior. The software is provided AS-IS without warranty. The author
-is not responsible for damages, data loss, or issues arising from beta use.
-
-=== TERMINATION ===
-
-Violation of naming, attribution, or use conditions terminates your license to use,
-modify, or distribute this software immediately and without notice. The copyright
-holder reserves the right to pursue legal action for unauthorized use of the
-"Kofu" name or brand.
-
-=== CONTACT ===
-
-For questions regarding this license, permissions, or derivative use:
-GitHub: https://github.com/shebxyd-pixel
-Repository: https://github.com/shebxyd-pixel/Proyecto_Kofu
-Project: Kofu v0.7 Beta
-
----
-
-Last Updated: June 20, 2026
-License Type: MIT + AI Generation + Custom Use Restrictions
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

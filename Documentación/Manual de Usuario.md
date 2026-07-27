@@ -346,7 +346,7 @@ No, las conversaciones no se guardan. Cada vez que actualices la página, el his
 Sí, usando el modo Local.
 
 #### ¿Cómo actualizo Kofu?
-Descarga la versión más nueva y reemplaza los archivos (mantén tu carpeta `templates/` y `output/`).
+Descarga la versión más nueva y reemplaza los archivos.
 
 ---
 

@@ -12,3 +12,10 @@ backend/server.py
 backend/src/venv
 CONTEXTO_KOFU.md
 Proyecto_Kofu(0.8).code-workspace
+CAMBIOS.md
+request_http.py
+serverhppd.py
+backend/src/__pycache__
+Proyecto_Kofu_v0.7
+env
+debug.html

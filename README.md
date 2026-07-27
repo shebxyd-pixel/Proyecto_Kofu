@@ -1,6 +1,6 @@
-# Kofu v0.8 (Beta)
+# Kofu v0.9 (Beta)
 
-⚠️ **Estado**: En proceso de desarrollo (Beta v0.8) - Usa LLM de Ollama con Gemma 4 para razonamiento y sanitización. La IA en esta beta no es autónoma y puede fallar debido a errores de direcciones.
+⚠️ **Estado**: En proceso de desarrollo (Beta v0.9) - Usa LLM de Ollama con Gemma 4 para razonamiento y sanitización.
 
 Plataforma de Inteligencia Artificial para Microsoft Office.
 

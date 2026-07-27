@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kofu v0.8 (Beta)</title>
+    <title>Kofu v0.9</title>
     <link rel="icon" type="image/x-icon" href="Uta icon.ico">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +12,7 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h1>Kofu</h1>
-                <p class="sidebar-subtitle">v0.7 (Beta)</p>
+                <p class="sidebar-subtitle">v0.8 <span id="portBadge" class="port-badge"></span></p>
             </div>
 
             <div class="mode-selector">
@@ -21,6 +21,18 @@
                     <button id="localModeBtn" class="mode-btn active" data-mode="local">Local</button>
                     <button id="onlineModeBtn" class="mode-btn" data-mode="online">Online</button>
                 </div>
+            </div>
+
+            <div class="model-config" id="modelConfig">
+                <label for="ollamaModelInput">Modelo de Ollama (Local):</label>
+                <input
+                    type="text"
+                    id="ollamaModelInput"
+                    class="api-input"
+                    list="ollamaModelsList"
+                    placeholder="Auto (gemma4 / llama3)"
+                >
+                <datalist id="ollamaModelsList"></datalist>
             </div>
 
             <div class="api-config" id="apiConfig">
@@ -92,7 +104,6 @@
             </div>
         </main>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
