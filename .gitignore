@@ -16,6 +16,16 @@ CAMBIOS.md
 request_http.py
 serverhppd.py
 backend/src/__pycache__
-Proyecto_Kofu_v0.7
+Proyecto_Kofu_v0.9.code-workspace
 env
 debug.html
+
+# Archivos no vitales
+.env
+.sync-exclude.lst
+Archivos/
+Propuestas/
+output/
+*.bak
+*.log
+monitor.py
