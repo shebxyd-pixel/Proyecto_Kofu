@@ -32,7 +32,7 @@ def open_browser():
 
 def main():
     print("========================================")
-    print("   Kofu v0.8 - Servidor de IA")
+    print("   Kofu v1.0 (Beta) - Servidor de IA")
     print("========================================")
     
     start_ollama()

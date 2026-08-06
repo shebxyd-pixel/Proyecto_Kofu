@@ -79,6 +79,6 @@ class TypoCorrector:
         for frase_correcta, variantes in self.FRASES_COMUNES.items():
             for variante in variantes:
                 if variante in text_lower:
-                    text_lower = text_lower.replace(variante, frase_correcta)
-        palabras = re.findall(r"\w+", text_lower)
-        return " ".join(self.correct_word(w) for w in palabras)
+                    text = re.sub(re.escape(variante), frase_correcta, text, flags=re.IGNORECASE)
+                    text_lower = text.lower()
+        return re.sub(r'\b\w+\b', lambda m: self.correct_word(m.group(0)), text)

@@ -67,28 +67,43 @@ class OfficeAgent:
 
     def _convert_office_template(self, template_path: str, app_name: str, save_format: int,
                                   ext_from: str, ext_to: str) -> Optional[str]:
-        if not self._win32_available:
-            return None
-        import win32com.client as win32
+        import zipfile
+        import tempfile
+        import shutil
         template_path = os.path.abspath(template_path)
         temp_path = template_path.replace(ext_from, ext_to)
-        app = None
         try:
-            app = win32.Dispatch(app_name)
-            app.Visible = False
-            doc = (app.Documents.Open(template_path) if app_name == "Word.Application"
-                   else app.Presentations.Open(template_path))
-            doc.SaveAs(temp_path, save_format)
-            doc.Close()
+            with tempfile.TemporaryDirectory() as tmpdir:
+                with zipfile.ZipFile(template_path, 'r') as zip_ref:
+                    zip_ref.extractall(tmpdir)
+                
+                content_types_path = os.path.join(tmpdir, "[Content_Types].xml")
+                with open(content_types_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                
+                if ext_from == ".dotx":
+                    content = content.replace(
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml",
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"
+                    )
+                elif ext_from == ".potx":
+                    content = content.replace(
+                        "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml",
+                        "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
+                    )
+                    
+                with open(content_types_path, 'w', encoding='utf-8') as f:
+                    f.write(content)
+                    
+                with zipfile.ZipFile(temp_path, 'w', zipfile.ZIP_DEFLATED) as zip_out:
+                    for root, dirs, files in os.walk(tmpdir):
+                        for file in files:
+                            file_path = os.path.join(root, file)
+                            arcname = os.path.relpath(file_path, tmpdir)
+                            zip_out.write(file_path, arcname)
             return temp_path
         except Exception:
             return None
-        finally:
-            if app is not None:
-                try:
-                    app.Quit()
-                except Exception:
-                    pass
 
     def get_template_schema(self, template_name: str) -> Optional[Dict]:
         if not template_name:
@@ -176,6 +191,8 @@ class OfficeAgent:
 
         doc_style = self.DOC_STYLES.get(style, self.DOC_STYLES["professional"])
 
+        import re
+
         for content in content_data:
             ctype = content["type"]
             if ctype == "heading":
@@ -186,12 +203,57 @@ class OfficeAgent:
                     run.font.color.rgb = RGBColor(*doc_style["heading_color"])
                     run.font.bold = True
                     run.font.size = Pt({1: 24, 2: 18}.get(level, 14))
+            elif ctype == "document_title":
+                clean_title = content["text"].replace("**", "").replace("*", "").replace("#", "").strip()
+                heading = document.add_heading(clean_title, level=0)
+                for run in heading.runs:
+                    run.font.name = doc_style["heading_font"]
+                    run.font.color.rgb = RGBColor(*doc_style["heading_color"])
+            elif ctype == "document_subtitle":
+                clean_sub = content["text"].replace("**", "").replace("*", "").replace("#", "").strip()
+                try:
+                    p = document.add_paragraph(clean_sub, style='Subtitle')
+                except Exception:
+                    p = document.add_paragraph(clean_sub)
+                    p.runs[0].font.bold = True
+                for run in p.runs:
+                    run.font.name = doc_style["heading_font"]
+                    run.font.color.rgb = RGBColor(*doc_style["heading_color"])
             elif ctype == "paragraph":
-                paragraph = document.add_paragraph()
-                paragraph.alignment = content.get("alignment", WD_ALIGN_PARAGRAPH.JUSTIFY)
-                run = paragraph.add_run(content["text"])
-                run.font.name, run.font.size = doc_style["body_font"], Pt(11)
-                run.font.color.rgb = RGBColor(*doc_style["body_color"])
+                blocks = content["text"].split("\n")
+                for block in blocks:
+                    block = block.strip()
+                    if not block:
+                        continue
+                    
+                    if block.startswith("#"):
+                        level = len(block) - len(block.lstrip("#"))
+                        level = min(level, 9)
+                        clean_text = block.lstrip("#").strip()
+                        heading = document.add_heading(clean_text, level=level)
+                        for run in heading.runs:
+                            run.font.name = doc_style["heading_font"]
+                            run.font.color.rgb = RGBColor(*doc_style["heading_color"])
+                        continue
+
+                    paragraph = document.add_paragraph()
+                    paragraph.alignment = content.get("alignment", WD_ALIGN_PARAGRAPH.JUSTIFY)
+                    
+                    parts = re.split(r'(\*\*.*?\*\*|\*.*?\*)', block)
+                    for part in parts:
+                        if not part: continue
+                        run = paragraph.add_run()
+                        run.font.name, run.font.size = doc_style["body_font"], Pt(11)
+                        run.font.color.rgb = RGBColor(*doc_style["body_color"])
+                        
+                        if part.startswith("**") and part.endswith("**"):
+                            run.text = part[2:-2]
+                            run.bold = True
+                        elif part.startswith("*") and part.endswith("*"):
+                            run.text = part[1:-1]
+                            run.italic = True
+                        else:
+                            run.text = part
             elif ctype == "table":
                 data = content["data"]
                 table = document.add_table(rows=len(data), cols=len(data[0]))
