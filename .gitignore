@@ -1,24 +1,76 @@
-templates/word/Cobaem.dotx
-iniciar.sh
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables
+.env
+.env.*
 .env(backup)
-CONTEXTO_KOFU.md
-INSTRUCCIONES_PROCESO.md
-.vscode
-backend/DEFOKO CATZ.ico
-.env.example
-backend/server.py
-.vscode/launch.json
-.vscode/settings.json
-backend/src/venv
-CONTEXTO_KOFU.md
-Proyecto_Kofu(0.8).code-workspace
-CAMBIOS.md
+
+# IDEs and Editors
+.vscode/
+*.code-workspace
+.idea/
+*.swp
+*.swo
+
+# Project specific generated directories
+Archivos/
+output/
+Propuestas/
+.trash/
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Office / LibreOffice temporary lock files
+.~lock.*
+*.tmp
+*.bak
+
+# Temporary scripts and garbage files
+test_*.py
+fix_template.py
+inspector.go
+debug.html
 request_http.py
 serverhppd.py
-backend/src/__pycache__
-Proyecto_Kofu_v0.7
-env
-debug.html
-LarIA.code-workspace
-test_laria.py
-.trash/Documentación
+iniciar.sh
+monitor.py
+
+# Generated docs
+*.docx
+*.pptx
+*.pdf
+
+# Other specific stuff
+backend/DEFOKO\ CATZ.ico
+.sync-exclude.lst

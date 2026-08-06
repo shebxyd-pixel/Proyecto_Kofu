@@ -1,4 +1,51 @@
+
+import os
 import re
+
+
+class SanitizadorEntrada:
+
+    PATRONES_PELIGROSOS = [
+        r"<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>",
+        r"javascript:", r"vbscript:", r"onload=", r"onclick=", r"onerror=",
+        r"eval\s*\(", r"exec\s*\(", r"system\s*\(", r"shell\s*\(",
+        r"drop\s+table", r"select\s+.*\s+from", r"insert\s+into", r"delete\s+from",
+        r"rm\s+-rf", r"mkdir\s+", r"rmdir\s+", r"chmod\s+", r"sudo\s+",
+        r"<iframe", r"<object", r"<embed", r"<svg", r"<link", r"<meta",
+    ]
+    ETIQUETAS_PERMITIDAS = ["b", "i", "u", "strong", "em", "p", "ul", "ol", "li", "h1", "h2", "h3"]
+
+    def __init__(self):
+        try:
+            import bleach
+            self._bleach = bleach
+        except ImportError:
+            self._bleach = None
+
+    def limpiar_texto(self, texto: str) -> str:
+        texto = str(texto)
+        for patron in self.PATRONES_PELIGROSOS:
+            texto = re.sub(patron, "", texto, flags=re.IGNORECASE)
+
+        if self._bleach:
+            texto = self._bleach.clean(
+                texto, tags=self.ETIQUETAS_PERMITIDAS, attributes={}, strip=True, strip_comments=True
+            )
+        else:
+            texto = re.sub(r"<[^>]+>", "", texto)
+
+        texto = re.sub(r"[\x00-\x1F\x7F-\x9F]", "", texto)
+        return re.sub(r"\s+", " ", texto).strip()
+
+    def es_entrada_segura(self, texto: str) -> bool:
+        limpio = self.limpiar_texto(texto)
+        return 0 < len(limpio) <= 10000
+
+    def sanitizar_nombre_archivo(self, nombre: str) -> str:
+        limpio = re.sub(r'[<>:"/\\|?*]', "", nombre)
+        limpio = os.path.basename(limpio)
+        return limpio[:255]
+
 
 class TypoCorrector:
     DICCIONARIO = {
@@ -32,6 +79,6 @@ class TypoCorrector:
         for frase_correcta, variantes in self.FRASES_COMUNES.items():
             for variante in variantes:
                 if variante in text_lower:
-                    text_lower = text_lower.replace(variante, frase_correcta)
-        palabras = re.findall(r"\w+", text_lower)
-        return " ".join(self.correct_word(w) for w in palabras)
+                    text = re.sub(re.escape(variante), frase_correcta, text, flags=re.IGNORECASE)
+                    text_lower = text.lower()
+        return re.sub(r'\b\w+\b', lambda m: self.correct_word(m.group(0)), text)

@@ -1,11 +1,11 @@
 # Script de inicio para Windows (PowerShell)
 
 Write-Host " "
-Write-Host "  _  __        __          __   _____  " -ForegroundColor Cyan
-Write-Host " | |/ /  ___  / _|  _   _  \ \ / / _ \ " -ForegroundColor Cyan
-Write-Host " | ' /  / _ \| |_  | | | |  \ V / | | |" -ForegroundColor Cyan
-Write-Host " | . \ | (_) |  _| | |_| |   | || |_| |" -ForegroundColor Cyan
-Write-Host " |_|\_\ \___/|_|    \__,_|   |_| \___/ " -ForegroundColor Cyan
+Write-Host "  _              ___    _     " -ForegroundColor Cyan
+Write-Host " | |    __ _ _ _|_ _|  / \    " -ForegroundColor Cyan
+Write-Host " | |   / _` | '__| |  / _ \   " -ForegroundColor Cyan
+Write-Host " | |__| (_| | |  | | / ___ \  " -ForegroundColor Cyan
+Write-Host " |_____\__,_|_| |___/_/   \_\ " -ForegroundColor Cyan
 Write-Host "                                       "
 
 # Cambiar al directorio del script
@@ -70,5 +70,28 @@ if (Test-Path "backend\src") {
     exit 1
 }
 
-Write-Host "Iniciando orquestador de Kofu en Python..." -ForegroundColor Green
+Write-Host "Verificando modelos de Ollama..." -ForegroundColor Yellow
+$OllamaBin = Get-Command ollama -ErrorAction SilentlyContinue
+if (-not $OllamaBin) {
+    Write-Host "ADVERTENCIA: Ollama no está instalado en el sistema. LarIA requiere Ollama para funcionar." -ForegroundColor Red
+} else {
+    $OllamaModels = (ollama list | Select-Object -Skip 1)
+    if (-not $OllamaModels) {
+        Write-Host "No se encontraron modelos en Ollama. Descargando llama3:latest por defecto..." -ForegroundColor Yellow
+        ollama pull llama3:latest
+    } else {
+        Write-Host "Modelos instalados en Ollama:" -ForegroundColor Green
+        ollama list
+        Write-Host ""
+        Write-Host "Opciones de Modelo:" -ForegroundColor Cyan
+        Write-Host "1. Descargar/Usar llama3:latest (Recomendado)"
+        Write-Host "2. Descargar/Usar gemma4:latest (Alternativa)"
+        Write-Host "3. Continuar con mis modelos actuales"
+        $Response = Read-Host "Elige una opción (1-3)"
+        if ($Response -eq "1") { ollama pull llama3:latest }
+        elseif ($Response -eq "2") { ollama pull gemma4:latest }
+    }
+}
+
+Write-Host "Iniciando orquestador de LarIA en Python..." -ForegroundColor Green
 python main.py

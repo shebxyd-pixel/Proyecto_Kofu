@@ -65,6 +65,29 @@ if exist "backend\src" (
     exit /b 1
 )
 
-echo Iniciando orquestador de Kofu en Python...
+echo Verificando modelos de Ollama...
+where ollama >nul 2>nul
+if %errorlevel% neq 0 (
+    echo ADVERTENCIA: Ollama no esta instalado en el sistema. LarIA requiere Ollama para funcionar.
+) else (
+    for /f "skip=1" %%i in ('ollama list') do set HAS_MODELS=1
+    if not defined HAS_MODELS (
+        echo No se encontraron modelos en Ollama. Descargando llama3:latest por defecto...
+        ollama pull llama3:latest
+    ) else (
+        echo Modelos instalados:
+        ollama list
+        echo.
+        echo Opciones de Modelo:
+        echo 1. Descargar/Usar llama3:latest (Recomendado)
+        echo 2. Descargar/Usar gemma4:latest (Alternativa)
+        echo 3. Continuar con mis modelos actuales
+        set /p MCHOICE="Elige una opcion (1-3): "
+        if "!MCHOICE!"=="1" ollama pull llama3:latest
+        if "!MCHOICE!"=="2" ollama pull gemma4:latest
+    )
+)
+
+echo Iniciando orquestador de LarIA en Python...
 python main.py
 pause

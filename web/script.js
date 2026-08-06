@@ -1,8 +1,8 @@
-const URL_CHAT = 'http://localhost:4010';
-const URL_OFFICE = 'http://localhost:5050';
-const URL_RESEARCH = 'http://localhost:7070';
-const URL_OLLAMA = 'http://localhost:2607';
-const URL_TEMPLATES = 'http://localhost:2005'
+const URL_CHAT = '';
+const URL_OFFICE = '';
+const URL_RESEARCH = '';
+const URL_OLLAMA = '';
+const URL_TEMPLATES = '';
  
 let allTemplates = { powerpoint: [], word: [] };
 let currentMode = 'local';
