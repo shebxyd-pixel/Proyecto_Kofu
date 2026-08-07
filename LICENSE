@@ -1,21 +1,22 @@
-MIT License
+KOFU - ACUERDO DE LICENCIA OPEN SOURCE
 
-Copyright (c) Ollama
+Copyright (c) 2024 Proyecto Kofu
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Este proyecto es de código abierto (Open Source). Al acceder, descargar o utilizar este código, aceptas las siguientes condiciones:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. USO Y MODIFICACIÓN:
+Eres libre de descargar, leer, estudiar y usar este código como referencia o inspiración para tus propios aprendizajes.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. RESTRICCIONES (NO PLAGIO):
+Queda estrictamente prohibido apropiarse, copiar textualmente y/o publicar este código afirmando que es de tu autoría (robar el código). Cualquier uso de este proyecto debe mantener el crédito al autor original.
+
+3. MANTENIMIENTO Y ACTUALIZACIONES:
+Este software se proporciona "tal cual". Las modificaciones, mejoras o parches que se agreguen en el futuro se realizarán de forma aleatoria e irregular. No existe un calendario de actualizaciones periódicas ni garantía de soporte continuo.
+
+4. COMPONENTES DE TERCEROS:
+Este proyecto hace uso de tecnologías de terceros que mantienen sus propias licencias:
+- Ollama: Distribuido bajo la Licencia MIT.
+- MarkItDown (Microsoft): Distribuido bajo la Licencia MIT.
+
+5. LIMITACIÓN DE RESPONSABILIDAD:
+EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO. EN NINGÚN CASO EL AUTOR SERÁ RESPONSABLE DE NINGÚN DAÑO O RECLAMACIÓN QUE SURJA DEL USO DE ESTE SOFTWARE.

@@ -1,13 +1,9 @@
 @echo off
 setlocal enabledelayedexpansion
 
-echo ""  
-echo " _  __           __                      ___         ___    "
-echo " | |/ /   ___    / _|  _   _    __   __  / _ \       ( _ )  "
-echo " | ' /   / _ \  | |_  | | | |   \ \ / / | | | |      / _ \  "
-echo " | . \  | (_) | |  _| | |_| |    \ V /  | |_| |  _  | (_) | "
-echo " |_|\_\  \___/  |_|    \__,_|     \_/    \___/  (_)  \___/  "
-echo ""
+echo "=========================================="
+echo "      Iniciando Kofu para Windows [CMD]..."
+echo "=========================================="
 
 cd /d "%~dp0"
 
@@ -18,7 +14,7 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-set "VENV_DIR=venv"
+set "VENV_DIR=env"
 
 rem 1. Crear entorno virtual si no existe
 if not exist "%VENV_DIR%" (

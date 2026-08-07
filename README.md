@@ -1,27 +1,40 @@
-# Kofu v1.0 (Beta)
+# Kofu v1.0 (Latest)
 
-⚠️ **Estado**: En proceso de desarrollo (Beta v1.0) - Usa LLM de Ollama con Gemma 4 para razonamiento y sanitización.
-
-Plataforma de Inteligencia Artificial para Microsoft Office.
+**Asistente autonomo multiplataforma 100% offline** de creacion de Documentos '.docx' y '.potx' usando diversas plantillas sin necesidad de tener Office u LibreOffice **usando el motor ollama para el procesamiento de ordenes e insercion de contexto hibrido.** 
 
 ## Requisitos del sistema
 
-- **Sistema Operativo**: Windows 10 o superior
-- **Python**: Versión 3.10 o superior
-- **Microsoft Office**: PowerPoint y Word instalados
-- **Conexión a Internet**: Para investigación web (modo Online)
+- **Sistema Operativo**: Windows 8.1/10/11, Linux, o macOS en sus versiones x64. 
+- **Python**: Versión 3.10 o superior (recomendado 3.10 o 3.11).
+- **Ofimática (Office / LibreOffice)**:
+  - **Para generar documentos**: NO es necesario tener instalado Microsoft Office ni LibreOffice. Kofu genera nativamente los archivos `.docx` y `.pptx` de manera independiente usando bibliotecas de Python (`python-docx` y `python-pptx`).
+  - **Para abrir y visualizar los documentos**: Necesitarás **Microsoft Office** (Word/PowerPoint), **LibreOffice** (Writer/Impress), u otra suite ofimática compatible con los formatos de OpenXML.
+- **Procesamiento de Audio / MarkItDown**: Si deseas procesar archivos de audio (MP3, WAV, etc.), es necesario tener instalado **[FFmpeg](https://ffmpeg.org/)** en tu sistema y agregado al PATH (requerido por `pydub`).
+- **Hardware (Para uso local)**: Mínimo 8 GB de RAM (16 GB o más recomendados si utilizas modelos locales de Ollama). Una GPU dedicada (NVIDIA/AMD) acelerará enormemente el procesamiento local, aunque puede funcionar en CPU (más lento).
+- **Conexión a Internet**: Necesaria para la instalación inicial, y requerida para el modo Online (investigación web o procesamiento externo de IA).
 
 ## Instalación
+
+### Python
 
 1. Instala Python desde [python.org](https://www.python.org/)
 2. Abre una terminal en la carpeta del proyecto
 3. Ejecuta: `pip install -r requirements.txt`
 
+
+1. Instala ollama en **[Ollama](https://ollama.com/)**
+#### Descarga los 3 modelos recomendados.
+
+  - Para conversar:
+    `ollama pull qwen2.5:0.5b-instruct` o `ollama pull smollm2:360m`
+  - Para generar documentos:
+    `ollama pull gemma` o `ollama pull llama3`
+
 ## Uso rápido
 
-1. **Inicia el servidor**: Haz doble clic en `iniciar.bat` o ejecuta `cd backend && py server.py`
-2. **Abre la interfaz**: Abre el archivo `web/index.html` en tu navegador
-3. **Comienza a usar Kofu**: Escribe tus mensajes y crea documentos o presentaciones
+1. **Inicia el servidor**: Ejecuta el archivo de arranque correspondiente (ej. `run.bat`, `run.sh`, `run.ps1`, o `run_macos.command`) En sistemas linux 'run.sh' [Solo se ha testeado en versiones basadas en ubuntu 25]
+2. **Descarga automatica**: Al arrancar el servidor por primera vez creara un entorno virtual e instalara las dependencias necesarias, esto puede tardar un poco la primera vez.
+3. **Comienza a usar Kofu**: Al terminar la instalacion se abrira automaticamente la interfaz de Kofu, si no se abre entonces puedes ir a 'localhost:8000'
 
 ## Funcionalidades principales
 
@@ -30,16 +43,16 @@ Plataforma de Inteligencia Artificial para Microsoft Office.
 - **Crear presentaciones PowerPoint**: Genera presentaciones automáticas
 - **Modo Local**: Usa Kofu sin conexión a internet
 - **Modo Online**: Investigación web y funciones avanzadas
-- **Plantillas personalizadas**: Usa tus propias plantillas de Office
-- **Carga de archivos**: Procesa documentos, imágenes, audio y más usando MarkItDown
-- **Razonamiento offline avanzado**: Integración con Ollama para usar modelos locales
+- **Plantillas personalizadas**: Usa tus propias plantillas de Office o las integradas por defecto
+- **Carga de archivos**: Procesa documentos, imágenes, audio y más usando MarkItDown [Experimental]
+- **Razonamiento offline avanzado**: Integración con el motor Ollama para usar modelos de forma local
 
 ## AI Status
 
-- La IA en esta beta no es autónoma.
-- El sistema usa Ollama con Gemma 4 para razonamiento y sanitización local.
-- Puede presentar errores de dirección y no debe considerarse una IA completamente autónoma en esta versión.
-- En esta etapa, Kofu actúa como plataforma asistida por modelo local.
+- La IA en esta version v1.0 estable y lista para usar.
+- El backend usa el motor Ollama para procesar la informacion y peticiones.
+- No se ha habillitado la version 100% local debido a conflictos con 'markitdown' y subdependencias
+- Kofu actua de manera independiente sin requerir usar office ni aplicaciones externas
 
 ## Stack Tecnológico
 
@@ -70,15 +83,17 @@ Kofu utiliza **MarkItDown** como una capa de conversión y extracción de conten
 
 Kofu integra **Ollama** para razonamiento local y sanitización de código.
 
-- Versión actual (0.7): Usa LLM Gemma 4.
+- Versión actual (1.0): Usa varios modelos de manera dinamica
 - Uso: razonamiento, sanitización de código y procesamiento local sin conexión.
 - Cómo configurar Ollama:
   1. Descarga e instala Ollama desde https://ollama.ai/
-  2. Descarga un modelo compatible.
-  3. Configura el archivo `.env` con `USE_OLLAMA=true`.
-  4. Inicia Kofu con `iniciar.bat`.
-- Beneficio: permite trabajar en modo local con un modelo de razonamiento avanzado.
+  2. Descarga un modelo compatible o los recomendados.
+  4. Inicia Kofu con tu script de arranque (ej. `run.bat`).
+
 - Licencias de terceros: los usuarios deben respetar los términos de licencia de Ollama.
+
+### Configuración avanzada
+MarkItDown está integrado directamente en el proyecto en el archivo `backend/src/markitdown.py`.
 
 ## Integración con MarkItDown
 
@@ -105,56 +120,44 @@ Kofu usa **MarkItDown** para convertir diversos tipos de archivos a Markdown/tex
   - MarkItDown procesa los archivos con las restricciones del proceso actual.
   - Kofu sanitiza todas las entradas antes de procesarlas para garantizar seguridad.
 
-### Configuración avanzada
-
-MarkItDown está incluido en el proyecto en modo editable desde la carpeta `markitdown/`. Para más información sobre MarkItDown, consulta `markitdown/README.md`.
-
-## Integración con Ollama (Razonamiento offline)
-
-Kofu tiene integración con Ollama para usar modelos locales y razonamiento avanzado sin conexión a internet.
-
 ### Cómo configurar Ollama:
 1. Descarga e instala Ollama desde [ollama.com/download](https://ollama.com/download)
 2. Descarga un modelo (recomendado: `ollama pull llama3`)
-3. Configura tu archivo .env con: USE_OLLAMA=true
-4. Inicia Kofu con `iniciar.bat`
+4. Inicia Kofu con tu script de arranque (ej. `run.bat`).
 
 ## Primeros pasos
 
 1. Selecciona el tipo de documento (Word o PowerPoint)
-2. (Opcional) Selecciona una plantilla
-3. (Opcional) Carga un archivo para usar su contenido
-4. Escribe tu solicitud y envía
-5. Kofu creará el documento o presentación automáticamente
+2. Selecciona una plantilla
+  - (Opcional) Carga un archivo para usar su contenido
+3. Escribe tu solicitud y envía
+4. Kofu creará el documento o presentación automáticamente
 
 ## Licencia y Términos de Uso
 
-Kofu está sujeto a términos específicos y a la licencia contenida en el archivo `LICENSE`.
+Kofu es un proyecto de código abierto (Open Source) sujeto a la licencia contenida en el archivo `LICENSE`.
 
 Resumen rápido:
 
-- ✅ Uso personal: versiones posteriores a 1.2 permitidas.
-- ✅ Uso educativo: versiones anteriores a 1.2 o versiones especiales educativas permitidas.
-- ❌ No se permite usar la versión normal superior a 1.2 en contextos educativos.
-- ❌ Uso comercial con este programa tal cual está no está permitido.
-- ✅ Para uso comercial: solo versiones inferiores a 1.2 con modificación de código mínima del 80%, o 1.0 con modificaciones mínimas para funcionalidad.
-- ✅ Proyectos derivados deben usar nombres DISTINTOS y no pueden llamarse "Kofu".
+- **Inspiración y aprendizaje**: Eres libre de usar el código para aprender y usarlo como referencia.
+- **No plagio**: Queda prohibido apropiarse del código, copiarlo y afirmar que es tuyo (no lo robes).
+- **Actualizaciones**: El proyecto recibirá parches y modificaciones de forma aleatoria, sin un calendario regular o periódico.
+- **Terceros**: Kofu integra MarkItDown (Microsoft) y el motor Ollama, ambos con sus respectivas licencias MIT.
 
 Para información completa, consulta el archivo `LICENSE`.
 
-## Para más información
-
-Consulta el `Manual de Usuario.md` para instrucciones detalladas y solución de problemas.
-
-## Versiones Futuras y Planes
-
-| Versión | Uso Personal | Uso Educativo | Uso Comercial |
-|---|---|---|---|
-| 0.7 Beta | ✅ Permitido localmente | ✅ Permitido con atribución | ❌ Restringido, requiere licencia o reestructura ≥80% |
-| 1.0 Stable | ✅ Permitido | ✅ Permitido con logos y atribución | ❌ Solo con modificaciones mínimas para funcionalidad |
-| 1.2 Stable y Optimized | ✅ Permitido | ✅ Solo versiones educativas especiales | ✅ Limitado bajo licencia |
-
 ### Roadmap por versión
+
+- **0.3 Estable**
+  - Generacion de documentos simples forzando conexiones estables por consola
+
+- **0.5 Estable**
+  - integracion de Web Reasearch
+
+- **0.6 Estable**
+  - Agregar modulos de sanitizacion
+  - Agregar modulos compatibles para api
+  - Mejora de Frontend
 
 - **0.7 Beta**
   - Versión actual que usa Ollama con Gemma 4 para razonamiento y sanitización.
@@ -162,36 +165,28 @@ Consulta el `Manual de Usuario.md` para instrucciones detalladas y solución de 
   - Incluye MarkItDown para OCR y conversión de archivos.
   - Disponible para uso personal, educativo (con atribución) y comercial restringido.
 
-- **1.0 Stable**
+- **0.8 Estable**
+  - Resolucion de conflictos Cors
+  - Primer resolucion de problemas complejos.
+  - Solucion de creacion de archivos
+  - Solucion con archivos Markitdown crudos
+
+- **0.9 Beta**
+  - Comunicacion estable
+  - Uso de Uvicorn
+  - Separacion del proyecto a LarIA(0.5)
+  - Creacion de plantillas
+
+- **1.0 Stable** _(Latest)_
   - Primera versión estable del proyecto.
   - Versión autónoma con capacidad estable.
-  - Mantenimiento y soporte continuo.
-  - Uso educativo permitido hasta v1.0 con logos y atribución.
-  - Uso comercial solo con modificaciones mínimas para funcionalidad.
+  - Primer version Funcional
+  - Independencia de Office
+  - Uso de plantillas
+  - Integracion de contexto inyectado
+  - Uso de diversos motores de razonamiento de forma dinamica
 
-- **1.2 Stable and Optimized**
-  - Versión de largo plazo con optimizaciones y mayor robustez.
-  - Enfocada en rapidez y rendimiento.
-  - Uso comercial limitado disponible bajo licencia.
-  - Versiones educativas especiales con integración a redes escolares y controles.
-
-### Versiones educativas v1.2+
-
-- Integración con redes escolares.
-- Controles para maestros y administradores.
-- Limitación de uso de estudiantes en modo local y online.
-- Privacidad y seguridad de datos escolares.
-- No se permite usar la versión normal superior a 1.2 en contextos educativos; solo versiones educativas especiales.
-
-### Versiones comerciales v1.2+
-
-- Basadas en la versión 1.2.
-- Licencias comerciales limitadas.
-- Soporte profesional y acuerdos personalizados.
-- Optimizaciones empresariales para entornos corporativos.
 
 ### Cómo contribuir
 
-- Si modificas más del 50% del código o agregas archivos para mejorar rendimiento,
-  tendrás mayor libertad de edición y distribución.
-- Asegúrate de documentar los cambios y mantener la atribución al origen.
+- Sigue los normamientos de github y no te apropies ni robes el codigo

@@ -68,6 +68,7 @@ def get_templates():
 
 @router.post("/chat")
 def chat(req: ChatRequest):
+    req.model = req.model or "qwen2.5:0.5b"
     try:
         response, steps = (
             assistant.direct_reason(req.message, modo=req.modo, model=req.model) if req.direct
@@ -87,14 +88,16 @@ def chat(req: ChatRequest):
 
 @router.post("/research")
 def research(req: TopicRequest):
+    req.model = req.model or "gemma4:latest"
     try:
-        return {"summary": assistant.research_topic(req.topic, modo=req.modo)}
+        return {"summary": assistant.research_topic(req.topic, modo=req.modo, model=req.model)}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.post("/office/powerpoint")
 def create_powerpoint(req: PresentationRequest):
+    req.model = req.model or "gemma4:latest"
     try:
         result = assistant.create_presentation(
             req.topic,
@@ -103,6 +106,7 @@ def create_powerpoint(req: PresentationRequest):
             modo=req.modo,
             filename=req.filename,
             template=req.template,
+            model=req.model,
         )
         backup_name = os.path.basename(result.get("backup_path", "")) if result.get("backup_path") else None
         return {
@@ -119,6 +123,7 @@ def create_powerpoint(req: PresentationRequest):
 
 @router.post("/office/powerpoint/download")
 def download_powerpoint(req: PresentationRequest):
+    req.model = req.model or "gemma4:latest"
     try:
         result = assistant.create_presentation(
             req.topic,
@@ -127,6 +132,7 @@ def download_powerpoint(req: PresentationRequest):
             modo=req.modo,
             filename=req.filename,
             template=req.template,
+            model=req.model,
         )
         file_path = result["file_path"]
         return FileResponse(
@@ -144,6 +150,7 @@ def download_powerpoint(req: PresentationRequest):
 
 @router.post("/office/word")
 def create_word(req: DocumentRequest):
+    req.model = req.model or "gemma4:latest"
     try:
         result = assistant.create_document(
             req.topic,
@@ -152,6 +159,7 @@ def create_word(req: DocumentRequest):
             modo=req.modo,
             filename=req.filename,
             template=req.template,
+            model=req.model,
         )
         backup_name = os.path.basename(result.get("backup_path", "")) if result.get("backup_path") else None
         return {
@@ -168,6 +176,7 @@ def create_word(req: DocumentRequest):
 
 @router.post("/office/word/download")
 def download_word(req: DocumentRequest):
+    req.model = req.model or "gemma4:latest"
     try:
         result = assistant.create_document(
             req.topic,
@@ -176,6 +185,7 @@ def download_word(req: DocumentRequest):
             modo=req.modo,
             filename=req.filename,
             template=req.template,
+            model=req.model,
         )
         file_path = result["file_path"]
         return FileResponse(

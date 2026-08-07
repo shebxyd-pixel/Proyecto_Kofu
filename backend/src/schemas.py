@@ -12,6 +12,7 @@ class ChatRequest(BaseModel):
 class TopicRequest(BaseModel):
     topic: str
     modo: str = "online"
+    model: Optional[str] = None
 
 
 class PresentationRequest(BaseModel):
@@ -21,6 +22,7 @@ class PresentationRequest(BaseModel):
     modo: str = "online"
     filename: Optional[str] = None
     template: Optional[str] = None
+    model: Optional[str] = None
 
 
 class DocumentRequest(BaseModel):
@@ -30,6 +32,7 @@ class DocumentRequest(BaseModel):
     modo: str = "online"
     filename: Optional[str] = None
     template: Optional[str] = None
+    model: Optional[str] = None
 
 
 class TipsRequest(BaseModel):

@@ -1,12 +1,8 @@
 # Script de inicio para Windows (PowerShell)
 
-Write-Host " "
-Write-Host "  _  __        __          __   _____  " -ForegroundColor Cyan
-Write-Host " | |/ /  ___  / _|  _   _  \ \ / / _ \ " -ForegroundColor Cyan
-Write-Host " | ' /  / _ \| |_  | | | |  \ V / | | |" -ForegroundColor Cyan
-Write-Host " | . \ | (_) |  _| | |_| |   | || |_| |" -ForegroundColor Cyan
-Write-Host " |_|\_\ \___/|_|    \__,_|   |_| \___/ " -ForegroundColor Cyan
-Write-Host "                                       "
+echo "=========================================="
+echo "      Iniciando Kofu para Windows[Powershell]..."
+echo "=========================================="                                      "
 
 # Cambiar al directorio del script
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
@@ -19,7 +15,7 @@ if (-not $PythonBin) {
     exit 1
 }
 
-$VenvDir = "venv"
+$VenvDir = "env"
 
 # 1. Crear entorno virtual si no existe
 if (-not (Test-Path -Path $VenvDir)) {

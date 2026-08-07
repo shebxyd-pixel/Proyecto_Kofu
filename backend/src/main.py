@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 
 def run_api_server(port):
-    uvicorn.run("api:app", host="0.0.0.0", port=port, log_level="error")
+    uvicorn.run("api:app", host="0.0.0.0", port=port, log_level="error", ws="none")
 
 def start_ollama():
     try:
@@ -64,7 +64,7 @@ def main():
     print("\nTodos los servicios iniciados correctamente. Presiona CTRL+C para detener.")
     
     try:
-        uvicorn.run(app_web, host="0.0.0.0", port=8000, log_level="warning")
+        uvicorn.run(app_web, host="0.0.0.0", port=8000, log_level="warning", ws="none")
     except KeyboardInterrupt:
         print("\nDeteniendo servicios...")
     finally:

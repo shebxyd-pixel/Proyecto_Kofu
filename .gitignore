@@ -16,6 +16,8 @@ backend/src/__pycache__
 Proyecto_Kofu_v0.9.code-workspace
 env
 debug.html
+backend/src/__pycache__/api.cpython-312.pyc
+backend/src/__pycache__
 
 # Archivos no vitales
 .env
@@ -37,3 +39,4 @@ test_document_real.py
 test_document.py
 test_converted.docx
 test_run.py
+backend/src/__pycache__/api.cpython-312.pyc
