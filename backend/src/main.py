@@ -9,9 +9,7 @@ import threading
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
-
-def run_api_server(port):
-    uvicorn.run("api:app", host="0.0.0.0", port=port, log_level="error", ws="none")
+from api import app as api_app
 
 def start_ollama():
     try:
@@ -37,41 +35,26 @@ def main():
     
     start_ollama()
     
-    ports = [4010, 5050, 7070, 2607, 2005]
-    processes = []
+    print("Levantando servicio unificado (Backend + Frontend) en puerto 8000...")
     
-    print("Levantando servicios en puertos separados (delegado a Python):")
-    for port in ports:
-        p = multiprocessing.Process(target=run_api_server, args=(port,))
-        p.start()
-        processes.append(p)
-        print(f" - Servicio backend en puerto {port}")
-        
-    print(" - Servidor Frontend en puerto 8000")
-    
-    # Configure Web Server
-    app_web = FastAPI(title="Kofu Web")
+    # Configure Web Server and API
     web_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'web')
+    api_app.mount("/web", StaticFiles(directory=web_dir), name="web")
     
-    app_web.mount("/web", StaticFiles(directory=web_dir), name="web")
-    
-    @app_web.get("/")
+    @api_app.get("/")
     def read_root():
         return RedirectResponse(url="/web/index.html")
 
     threading.Thread(target=open_browser, daemon=True).start()
     
-    print("\nTodos los servicios iniciados correctamente. Presiona CTRL+C para detener.")
+    print("\nTodos los servicios iniciados correctamente en el puerto 8000. Presiona CTRL+C para detener.")
     
     try:
-        uvicorn.run(app_web, host="0.0.0.0", port=8000, log_level="warning", ws="none")
+        uvicorn.run(api_app, host="0.0.0.0", port=8000, log_level="warning", ws="none")
     except KeyboardInterrupt:
         print("\nDeteniendo servicios...")
     finally:
-        for p in processes:
-            p.terminate()
-            p.join()
-        print("Servidores detenidos.")
+        print("Servidor detenido.")
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()

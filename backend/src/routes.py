@@ -1,7 +1,7 @@
 import os
 from typing import List, Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from fastapi.responses import FileResponse
 
 from assistant import AIAssistant
@@ -225,4 +225,26 @@ def correct_text(req: CorrectRequest):
                   else assistant.sanitizador.limpiar_texto(req.text))
     corregido = assistant.typo_corrector.correct_text(sanitizado)
     return {"original": req.text, "sanitizado": sanitizado, "corregido": corregido}
+
+@router.post("/files/upload")
+async def upload_file(file: UploadFile = File(...)):
+    # Guardar en Archivos temporalmente
+    os.makedirs(ARCHIVOS_DIR, exist_ok=True)
+    file_path = os.path.join(ARCHIVOS_DIR, file.filename)
+    try:
+        with open(file_path, "wb") as buffer:
+            buffer.write(await file.read())
+        
+        # Procesar
+        if not assistant.file_processor.available:
+            raise HTTPException(status_code=503, detail="MarkItDown no está instalado. Ejecuta: pip install markitdown")
+        
+        result = assistant.file_processor.process_local_file(file_path)
+        if not result.get("success"):
+            raise HTTPException(status_code=422, detail=result.get("error", "No se pudo procesar el archivo."))
+            
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
     
