@@ -1,0 +1,31 @@
+# Maintainer: Kofu Project <kofu@project.dev>
+pkgname=kofu
+pkgver=2.0.0
+pkgrel=1
+pkgdesc="Kofu — Local AI Document Assistant (C++ Backend)"
+arch=('x86_64')
+url="https://github.com/shebxyd-pixel/Proyecto_Kofu"
+license=('custom')
+depends=('libzip' 'gcc-libs')
+makedepends=('cmake' 'gcc' 'git' 'pkgconf')
+optdepends=('ollama: Local AI model inference engine')
+source=("${pkgname}-${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}/kofu-cpp"
+    cmake -B build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DKOFU_THREAD_POOL_SIZE=6
+    cmake --build build -j"$(nproc)"
+}
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}/kofu-cpp"
+    DESTDIR="${pkgdir}" cmake --install build
+
+    # License
+    install -Dm644 "${srcdir}/${pkgname}-${pkgver}/LICENSE" \
+        "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

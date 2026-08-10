@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Kofu
+Comment=Local AI Document Assistant
+Exec=kofu
+Icon=kofu
+Terminal=false
+Type=Application
+Categories=Office;Utility;
+Keywords=AI;Documents;Word;PowerPoint;Ollama;
+StartupNotify=true

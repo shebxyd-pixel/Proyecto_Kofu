@@ -1,0 +1,91 @@
+name: Build Kofu-CPP Releases
+
+on:
+  push:
+    tags:
+      - 'v*' # Run only when pushing a version tag (e.g. v2.0.0)
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake libzip-dev build-essential
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -S .
+
+      - name: Build
+        run: cmake --build build -j 4
+
+      - name: Package (DEB and TGZ)
+        working-directory: build
+        run: cpack -G "DEB;TGZ"
+
+      - name: Upload Linux Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Kofu-Linux-Releases
+          path: |
+            build/*.deb
+            build/*.tar.gz
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies (vcpkg)
+        run: |
+          vcpkg install libzip:x64-windows
+          vcpkg integrate install
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" -S .
+
+      - name: Build
+        run: cmake --build build --config Release -j 4
+
+      - name: Package (NSIS EXE and ZIP)
+        working-directory: build
+        run: cpack -G "NSIS;ZIP" -C Release
+
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Kofu-Windows-Releases
+          path: |
+            build/*.exe
+            build/*.zip
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: brew install cmake libzip
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -S .
+
+      - name: Build
+        run: cmake --build build -j 4
+
+      - name: Package (DMG)
+        working-directory: build
+        run: cpack -G "DragNDrop;TGZ"
+
+      - name: Upload macOS Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Kofu-macOS-Releases
+          path: |
+            build/*.dmg
+            build/*.tar.gz
