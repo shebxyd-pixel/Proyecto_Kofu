@@ -91,9 +91,15 @@ include(cmake/FetchDependencies.cmake)
 # Find system libraries
 # ---------------------------------------------------------------------------
 # libzip — required for .docx/.pptx ZIP archive creation
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBZIP REQUIRED IMPORTED_TARGET libzip)
-message(STATUS "libzip: ${LIBZIP_VERSION} (${LIBZIP_LINK_LIBRARIES})")
+if(WIN32 OR MSVC)
+    find_package(libzip CONFIG REQUIRED)
+    add_library(PkgConfig::LIBZIP ALIAS libzip::zip)
+    message(STATUS "libzip: found via vcpkg")
+else()
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(LIBZIP REQUIRED IMPORTED_TARGET libzip)
+    message(STATUS "libzip: ${LIBZIP_VERSION} (${LIBZIP_LINK_LIBRARIES})")
+endif()
 
 # Threads — required by cpp-httplib
 find_package(Threads REQUIRED)
@@ -159,25 +165,31 @@ install(TARGETS kofu
 )
 
 # Install web frontend assets
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../web/
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/kofu/web
-    FILES_MATCHING
-        PATTERN "*.html"
-        PATTERN "*.js"
-        PATTERN "*.css"
-        PATTERN "*.ico"
-)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../web/")
+    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../web/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/kofu/web
+        FILES_MATCHING
+            PATTERN "*.html"
+            PATTERN "*.js"
+            PATTERN "*.css"
+            PATTERN "*.ico"
+    )
+endif()
 
 # Install document templates
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../templates/
-    DESTINATION ${CMAKE_INSTALL_DATADIR}/kofu/templates
-)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../templates/")
+    install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../templates/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/kofu/templates
+    )
+endif()
 
 # Install .env config template
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../.env
-    DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/kofu
-    RENAME kofu.env.example
-)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../.env")
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../.env
+        DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/kofu
+        RENAME kofu.env.example
+    )
+endif()
 
 # Install desktop entry (Linux)
 if(UNIX AND NOT APPLE)
