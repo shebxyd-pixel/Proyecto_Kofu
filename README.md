@@ -5,7 +5,7 @@
 Plataforma de Inteligencia Artificial para Microsoft Office.
 
 **¿Qué es LarIA?**
-LarIA es un proyecto experimental tipo "What if?" (¿Qué pasaría si...?) que nace de Kofu, pero está diseñado para ser absurdamente rápido y ligero. A diferencia de Kofu que es robusto y potente, LarIA sacrifica módulos no vitales (como múltiples puertos, seguridad pesada de sanitización o procesos complejos) con un único propósito: generar presentaciones y documentos a una velocidad ridículamente alta y con el menor consumo de recursos posible, manteniendo la misma calidad de texto generado.
+LarIA es un proyecto experimental tipo "What if?" (¿Qué pasaría si...?) que nace de Kofu, pero está diseñado para ser absurdamente rápido y ligero. A diferencia de Kofu que es robusto y poten[...]
 
 ## Requisitos del sistema
 
@@ -20,9 +20,11 @@ LarIA es un proyecto experimental tipo "What if?" (¿Qué pasaría si...?) que n
 
 ### 0. Clonar el repositorio 
 
-'git clone -b LarIA_v0.4 --single-branch [https://github.com/TU_USUARIO/Proyecto_Kofu.git](https://github.com/TU_USUARIO/Proyecto_Kofu.git)'
-
-'cd Proyecto_Kofu'
+```bash
+# Clonar la rama específica LarIA_v0.4
+git clone -b LarIA_v0.4 --single-branch https://github.com/shebxyd-pixel/Proyecto_Kofu.git
+cd Proyecto_Kofu
+```
 
 ### 1. Instalar Python y Ollama
 - Descarga e instala [Python](https://www.python.org/downloads/) (marca la opción "Add to PATH").
