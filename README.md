@@ -18,6 +18,12 @@ LarIA es un proyecto experimental tipo "What if?" (¿Qué pasaría si...?) que n
 
 ## Guía de Instalación y Uso (Paso a Paso)
 
+### 0. Clonar el repositorio 
+
+'git clone -b LarIA_v0.4 --single-branch [https://github.com/TU_USUARIO/Proyecto_Kofu.git](https://github.com/TU_USUARIO/Proyecto_Kofu.git)'
+
+'cd Proyecto_Kofu'
+
 ### 1. Instalar Python y Ollama
 - Descarga e instala [Python](https://www.python.org/downloads/) (marca la opción "Add to PATH").
 - Descarga e instala [Ollama](https://ollama.com/download). 
