@@ -16,6 +16,9 @@ NO_MODEL_ERROR_MESSAGE = "Error 418; No hay modelo disponible"
 
 PREFERRED_PORTS = [8000, 8080, 3000, 5000]
 
+# Memoria de conversación (horas antes de borrar el archivo de contexto)
+# Si se pone en 0, el contexto nunca expirará automáticamente y se sobrescribirá.
+CONTEXT_EXPIRATION_HOURS = 12
 
 def find_free_port(candidates: list[int]) -> int:
     for port in candidates:

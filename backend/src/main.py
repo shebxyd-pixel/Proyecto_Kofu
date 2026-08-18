@@ -9,7 +9,7 @@ import threading
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
-from api import app as api_app
+from api import app
 
 def start_ollama():
     try:
@@ -38,10 +38,11 @@ def main():
     print("Levantando servicio unificado (Backend + Frontend) en puerto 8000...")
     
     # Configure Web Server and API
-    web_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'web')
-    api_app.mount("/web", StaticFiles(directory=web_dir), name="web")
+    from paths import WEB_DIR
+    web_dir = WEB_DIR
+    app.mount("/web", StaticFiles(directory=web_dir), name="web")
     
-    @api_app.get("/")
+    @app.get("/")
     def read_root():
         return RedirectResponse(url="/web/index.html")
 
@@ -50,7 +51,7 @@ def main():
     print("\nTodos los servicios iniciados correctamente en el puerto 8000. Presiona CTRL+C para detener.")
     
     try:
-        uvicorn.run(api_app, host="0.0.0.0", port=8000, log_level="warning", ws="none")
+        uvicorn.run(app, host="0.0.0.0", port=8000, log_level="warning", ws="none")
     except KeyboardInterrupt:
         print("\nDeteniendo servicios...")
     finally:

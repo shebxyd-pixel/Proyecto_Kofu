@@ -56,11 +56,14 @@ class OllamaEngine:
         raise NoModelAvailableError()
 
     def _generate(self, prompt: str, model: str, temperature: float = 0.7,
-                   num_predict: int = 1024, timeout: int = OLLAMA_TIMEOUT_GENERATE) -> str:
+                   num_predict: int = 1024, timeout: int = OLLAMA_TIMEOUT_GENERATE,
+                   system_prompt: Optional[str] = None) -> str:
         payload = {
             "model": model, "prompt": prompt, "stream": False,
             "options": {"temperature": temperature, "num_predict": num_predict},
         }
+        if system_prompt:
+            payload["system"] = system_prompt
         try:
             resp = requests.post(f"{self.base_url}/api/generate", json=payload, timeout=timeout)
             resp.raise_for_status()
@@ -79,7 +82,7 @@ class OllamaEngine:
             "Eres Kofu, un asistente de IA para crear documentos y presentaciones. "
             "Responde de forma clara y útil."
         )
-        respuesta = self._generate(f"{system_msg}\n\nUSUARIO: {prompt}", model=modelo_resuelto)
+        respuesta = self._generate(prompt, model=modelo_resuelto, system_prompt=system_msg)
         return respuesta, modelo_resuelto
 
     def sanitizar_entrada(self, texto_sucio: str, model: Optional[str] = None) -> Tuple[Dict[str, Any], bool]:

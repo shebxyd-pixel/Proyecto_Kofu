@@ -12,6 +12,9 @@ langchain>=0.2.0
 langchain-ollama>=0.1.0
 
 markdownify>=0.0.0
+markitdown>=0.1.0
+openai>=3.2.0
+aiohttp>=3.14.3
 magika~=0.6.1
 charset-normalizer>=2.0.0
 defusedxml>=0.7.1

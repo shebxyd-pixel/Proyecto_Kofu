@@ -10,8 +10,13 @@ def extraer_contenido_documento(ruta_archivo: str) -> str:
         return f"Error: El archivo en '{ruta_archivo}' no existe."
     
     try:
-        # Inicializamos MarkItDown
-        md = MarkItDown()
+        # Inicializamos MarkItDown con Ollama
+        from openai import OpenAI
+        client = OpenAI(
+            base_url='http://localhost:11434/v1',
+            api_key='ollama'
+        )
+        md = MarkItDown(llm_client=client, llm_model='qwen2.5vl:3b')
         
         # Convertimos el archivo de forma automática
         resultado = md.convert(ruta_archivo)

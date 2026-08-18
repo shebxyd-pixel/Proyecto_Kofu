@@ -13,7 +13,12 @@ class FileProcessor:
     def __init__(self):
         try:
             from markitdown import MarkItDown
-            self._markitdown = MarkItDown(enable_plugins=False)
+            from openai import OpenAI
+            client = OpenAI(
+                base_url='http://localhost:11434/v1',
+                api_key='ollama'
+            )
+            self._markitdown = MarkItDown(llm_client=client, llm_model='qwen2.5vl:3b')
         except ImportError:
             self._markitdown = None
 
@@ -25,7 +30,7 @@ class FileProcessor:
         if not self.available:
             return {"success": False, "error": "MarkItDown no está instalado.", "filename": os.path.basename(file_path)}
         try:
-            result = self._markitdown.convert_local(file_path)
+            result = self._markitdown.convert(file_path)
             return {
                 "success": True,
                 "text_content": result.text_content,

@@ -13,9 +13,12 @@ proceso puede atender una request con "llama3:latest" y la siguiente con
 """
 import os
 import re
+import threading
+import time
 from typing import List, Optional, Tuple
 
 import requests
+from config import CONTEXT_EXPIRATION_HOURS
 
 from ollama_client import OllamaEngine, NoModelAvailableError
 
@@ -155,13 +158,57 @@ class HybridReasoningEngine(ReasoningEngine):
         self.ollama_engine = OllamaEngine() if use_ollama else None
         self.chain_of_thought = ChainOfThought()
         self.last_model_used: Optional[str] = None
+        self.context_file = os.path.join(os.path.dirname(__file__), "__pycache__", "CONTEXTO")
+
+    def _leer_contexto(self) -> str:
+        if os.path.exists(self.context_file):
+            if CONTEXT_EXPIRATION_HOURS > 0:
+                edad_horas = (time.time() - os.path.getmtime(self.context_file)) / 3600.0
+                if edad_horas > CONTEXT_EXPIRATION_HOURS:
+                    try:
+                        os.remove(self.context_file)
+                    except Exception:
+                        pass
+                    return ""
+            try:
+                with open(self.context_file, "r", encoding="utf-8") as f:
+                    return f.read().strip()
+            except Exception:
+                pass
+        return ""
+
+    def _guardar_contexto_async(self, prompt: str, respuesta: str, model: Optional[str]):
+        if not self.ollama_engine:
+            return
+        contexto_previo = self._leer_contexto()
+        instruccion = (
+            "Resume la siguiente interacción en una sola oración concisa (máximo 15 palabras) "
+            "desde la perspectiva del asistente para recordar de qué hablaron. Escribe SOLO la oración de resumen.\n\n"
+            f"Contexto previo: {contexto_previo}\n"
+            f"Usuario: {prompt}\n"
+            f"Asistente: {respuesta}\n"
+            "Resumen:"
+        )
+        def tarea():
+            try:
+                resumen, _ = self.ollama_engine.razonar(instruccion, model=model, system_prompt="Eres una IA que resume interacciones en 1 oración.")
+                if resumen:
+                    os.makedirs(os.path.dirname(self.context_file), exist_ok=True)
+                    with open(self.context_file, "w", encoding="utf-8") as f:
+                        f.write(resumen.strip())
+            except Exception:
+                pass
+        threading.Thread(target=tarea, daemon=True).start()
 
     def _respuesta_con_ollama(self, prompt: str, system_prompt: Optional[str] = None,
                                allow_external: bool = False, model: Optional[str] = None) -> Optional[str]:
         if self.ollama_engine:
             try:
-                respuesta, modelo_usado = self.ollama_engine.razonar(prompt, model=model, system_prompt=system_prompt)
+                contexto_previo = self._leer_contexto()
+                prompt_con_contexto = f"Contexto de la conversación anterior: {contexto_previo}\n\n{prompt}" if contexto_previo else prompt
+                respuesta, modelo_usado = self.ollama_engine.razonar(prompt_con_contexto, model=model, system_prompt=system_prompt)
                 self.last_model_used = modelo_usado
+                self._guardar_contexto_async(prompt, respuesta, model=modelo_usado)
                 return respuesta
             except NoModelAvailableError:
                 raise  # caso explícito: no se enmascara, sube hasta la ruta HTTP como 418

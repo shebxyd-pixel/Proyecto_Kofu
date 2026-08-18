@@ -1,4 +1,5 @@
 import os
+from paths import TEMPLATES_DIR
 from typing import Any, Dict, List, Optional, Tuple
 
 from file_processor import FileProcessor
@@ -119,7 +120,7 @@ class AIAssistant:
             if not template.endswith(".potx"):
                 template += ".potx"
             template_path = os.path.join(
-                os.path.dirname(__file__), '..', '..', 'templates', 'powerpoint', template
+                TEMPLATES_DIR, 'powerpoint', template
             )
             schema = self.office_agent.get_template_schema(template)
 
@@ -149,7 +150,7 @@ class AIAssistant:
                          model: Optional[str] = None) -> Dict[str, Any]:
         import random
         if not template:
-            word_templates_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'templates', 'word')
+            word_templates_dir = os.path.join(TEMPLATES_DIR, 'word')
             if os.path.exists(word_templates_dir):
                 available = [f for f in os.listdir(word_templates_dir) if f.endswith(('.dotx', '.docx')) and not f.startswith('~$')]
                 if available:
@@ -168,7 +169,7 @@ class AIAssistant:
             if not template.endswith(".dotx"):
                 template += ".dotx"
             template_path = os.path.join(
-                os.path.dirname(__file__), '..', '..', 'templates', 'word', template
+                TEMPLATES_DIR, 'word', template
             )
             schema = self.office_agent.get_template_schema(template)
 

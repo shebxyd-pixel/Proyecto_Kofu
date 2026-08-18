@@ -18,9 +18,14 @@ env
 debug.html
 backend/src/__pycache__/api.cpython-312.pyc
 backend/src/__pycache__
+backend/src/__pycache__
 
 # Archivos no vitales
 .env
+build_windows.bat
+build.sh
+check_ollama.bat
+kofu.spec
 .sync-exclude.lst
 Archivos/
 Propuestas/
@@ -40,3 +45,30 @@ test_document.py
 test_converted.docx
 test_run.py
 backend/src/__pycache__/api.cpython-312.pyc
+check_ollama.sh
+python-3.11.9-amd64.exe
+version_info.txt
+backend/src/test_md.py
+build/kofu/base_library.zip
+dist/kofu.exe
+dist/kofu.desktop
+dist/Kofu-v1.1-x86_64
+dist/kofu_launcher.sh
+dist/kofu_launcher.bat
+dist/kofu
+kofu_1.0.0_amd64.deb
+build/kofu/xref-kofu.html
+build/kofu/EXE-00.toc
+build/kofu/Analysis-00.toc
+.gitignore
+build/kofu/localpycs/struct.pyc
+build/kofu/localpycs/pyimod04_pywin32.pyc
+build/kofu/localpycs/pyimod02_importers.pyc
+build/kofu/localpycs/pyimod01_archive.pyc
+build/kofu/warn-kofu.txt
+build/kofu/localpycs/pyimod03_ctypes.pyc
+.gitignore
+build/kofu/PKG-00.toc
+build/kofu/kofu.pkg
+build/kofu/PYZ-00.pyz
+build/kofu/PYZ-00.toc

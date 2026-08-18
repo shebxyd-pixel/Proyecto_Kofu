@@ -3,9 +3,7 @@ import shutil
 from typing import Any, Dict, List, Optional
 
 
-BASE_DIR = os.path.join(os.path.dirname(__file__), '..', '..')
-ARCHIVOS_DIR = os.path.join(BASE_DIR, 'Archivos')
-OUTPUT_DIR = os.path.join(BASE_DIR, 'output')
+from paths import BASE_DIR, ARCHIVOS_DIR, OUTPUT_DIR
 
 
 def _ensure_dirs():
