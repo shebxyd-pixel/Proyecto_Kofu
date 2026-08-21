@@ -1,4 +1,4 @@
-# LarIA v0.5 (Beta)
+# LarIA v0.6 (Beta)
 
 ⚠️ **Estado**: En proceso de desarrollo (Beta v0.5) - Usa LLM de Ollama con Gemma 4 para razonamiento y sanitización.
 
