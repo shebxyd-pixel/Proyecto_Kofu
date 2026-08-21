@@ -1,4 +1,4 @@
-# Kofu v1.0 (Latest)
+# Kofu v1.1 (Latest)
 
 **Asistente autonomo multiplataforma 100% offline** de creacion de Documentos '.docx' y '.potx' usando diversas plantillas sin necesidad de tener Office u LibreOffice **usando el motor ollama para el procesamiento de ordenes e insercion de contexto hibrido.** 
 
@@ -177,7 +177,7 @@ Para información completa, consulta el archivo `LICENSE`.
   - Separacion del proyecto a LarIA(0.5)
   - Creacion de plantillas
 
-- **1.0 Stable** _(Latest)_
+- **1.0 Stable**
   - Primera versión estable del proyecto.
   - Versión autónoma con capacidad estable.
   - Primer version Funcional
@@ -185,6 +185,13 @@ Para información completa, consulta el archivo `LICENSE`.
   - Uso de plantillas
   - Integracion de contexto inyectado
   - Uso de diversos motores de razonamiento de forma dinamica
+ 
+- **1.1 Stable**  _(Latest)_
+- Primera version Autonoma del proyecto sin python
+- Primer version Offline [Experimental]
+- Mejora de contexto integrado
+- Aumento de lista de modelos para usar
+- markitdown reparado
 
 
 ### Cómo contribuir
